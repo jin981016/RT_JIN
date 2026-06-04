@@ -668,7 +668,7 @@ def radius_info(path, atom=None):
     return radius, radius_kpc, dr
  
  
-def make_data_file(path, atom, Lumin, metals, Column_density_order):
+def make_data_file(save_path,path, atom, Lumin, metals, Column_density_order):
     """
     CLOUDY 결과를 읽어 RT 입력용 텍스트 파일과 폴더를 생성합니다.
  
@@ -698,7 +698,7 @@ def make_data_file(path, atom, Lumin, metals, Column_density_order):
     
     
     folder_name = f'{atom}L{lum_int}M{metals_str}NH{col_int}'
-    save_path = f'/home/jinlim/update_RT/CLOUDY_data/'
+    # save_path = f'/home/jinlim/update_RT/CLOUDY_data/'
     folder_path = f'{save_path}{folder_name}'
  
     try:
