@@ -297,8 +297,8 @@ def QSO_SED(path_SED):
 
 
 def SED_properties(Lumin, V_emit, metals, Column_density_order):
-    # ← 수정: _resolve_column_density_path 사용
-    path_SED = _resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
+    # ← 수정: resolve_column_density_path 사용
+    path_SED = resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
 
     Ryd, Fnu = QSO_SED(path_SED)
     nu   = Ryd * 13.6 / h_ev
@@ -375,8 +375,8 @@ def Surface_Brightness_CLOUDY(z, radius_kpc, emissivity, dr):
 # =====================================================
 
 def CLOUDY_data_path(Lumin, metals, Column_density_order):
-    # ← 수정: _resolve_column_density_path 사용
-    path_cloudy = _resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV/CLOUDY_QSO')
+    # ← 수정: resolve_column_density_path 사용
+    path_cloudy = resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV/CLOUDY_QSO')
 
     Mod = pc.CloudyModel(path_cloudy)
     Mod.ionic_names
@@ -528,8 +528,8 @@ def photon_number_SB(radius, origin_SB, CIV_lum):
 
 def spatial_distribution_CLOUDY(path_RT, V_out, V_emit, V_rand, geo, atom,
                                  Lumin, metals, Column_density_order):
-    # ← 수정: _resolve_column_density_path 사용
-    path_SED = _resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
+    # ← 수정: resolve_column_density_path 사용
+    path_SED = resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
     Lc, EW_direct_J, _ = SED_properties(Lumin, V_emit, metals, Column_density_order)
     cloudy_data = CLOUDY_data_path(Lumin, metals, Column_density_order)
 
@@ -545,8 +545,8 @@ def spatial_distribution_CLOUDY(path_RT, V_out, V_emit, V_rand, geo, atom,
 
 def spatial_distribution_RT(path_RT, V_out, V_emit, V_rand, geo, atom,
                              Lumin, metals, Column_density_order):
-    # ← 수정: _resolve_column_density_path 사용
-    path_SED = _resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
+    # ← 수정: resolve_column_density_path 사용
+    path_SED = resolve_column_density_path(Lumin, metals, Column_density_order, 'CIV')
 
     Lc, EW_direct_J, _ = SED_properties(Lumin, V_emit, metals, Column_density_order)
     cloudy_data = CLOUDY_data_path(Lumin, metals, Column_density_order)
@@ -695,9 +695,11 @@ def make_data_file(path, atom, Lumin, metals, Column_density_order):
         metals_str = f"{int(metals * 1000):04d}"
     else:
         metals_str = str(int(metals))
- 
+    
+    
     folder_name = f'{atom}L{lum_int}M{metals_str}NH{col_int}'
-    folder_path = f'/home/jin/RT/RT_Run_data/{folder_name}'
+    save_path = f'/home/jinlim/update_RT/CLOUDY_data/'
+    folder_path = f'{save_path}{folder_name}'
  
     try:
         os.makedirs(folder_path, exist_ok=True)
@@ -707,7 +709,7 @@ def make_data_file(path, atom, Lumin, metals, Column_density_order):
  
     # 메인 텍스트 파일 저장 (RT 입력용)
     tt.to_csv(
-        f'/home/jin/RT/RT_Run_data/{folder_name}.txt',
+        f'{save_path}{folder_name}.txt',
         sep='\t', index=False, header=False
     )
  
