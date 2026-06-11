@@ -98,7 +98,7 @@ def resolve_column_density_path(Lumin, metals, Column_density_order, sub_path='C
         dir_order_str = str(Column_density_order)
 
     return os.path.expanduser(
-        f'~/CLOUDY_setup/Lum_{Lumin}_2/metal_{metals}/N_H_{cl_order}_{dir_order_str}/{sub_path}'
+        f'~/CIV_RT_scat_data/CLOUDY_setup/Lum_{Lumin}_2/metal_{metals}/N_H_{cl_order}_{dir_order_str}/{sub_path}'
     )
 
 
